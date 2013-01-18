@@ -1,0 +1,58 @@
+apply plugin: 'java'
+apply plugin: 'idea'
+
+group = 'com.github.amcclosky'
+version = '1.0.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+configurations {
+    provided
+}
+
+sourceSets.main {
+    compileClasspath += configurations.provided
+}
+
+jar {
+    into('META-INF') {
+        from 'META-INF/plugin.xml'
+        // TODO add your own license here if applicable
+        //from 'LICENSE'
+    }
+}
+
+dependencies {
+    // TODO add your own dependencies here
+
+    // IntelliJ plugin runtime libraries, since they're not available from a convenient repo
+    provided files('intellij/extensions-ideaIC-122-SNAPSHOT.jar')
+    provided files('intellij/openapi-ideaIC-122-SNAPSHOT.jar')
+    provided files('intellij/util-ideaIC-122-SNAPSHOT.jar')
+}
+
+// ensure our project type is set to IntelliJ plugin
+idea.module {
+    jdkName = ideaPluginJdkName
+    iml {
+        withXml {
+            def node = it.asNode()
+            node.attributes().put('type','PLUGIN_MODULE')
+        }
+    }
+}
+
+task distPlugin(type: Zip, dependsOn: jar) {
+    description = "Generate the IntelliJ plugin archive from the current project."
+    into("${project.name}/lib") {
+        from jar.archivePath
+        from configurations.runtime
+    }
+}
+
+// enable Gradle Wrapper support for bootstrapping with specific version
+task wrapper(type: Wrapper) {
+    gradleVersion = 1.3
+}
