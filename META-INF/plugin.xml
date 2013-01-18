@@ -1,0 +1,25 @@
+<idea-plugin version="2">
+    <name>IDEA GitHub Markdown</name>
+    <description>Preview GitHub-flavored markdown documents in IDEA-based environments.</description>
+    <version>1.0.0-alpha</version>
+    <vendor>amcclosky</vendor>
+
+    <idea-version since-build="107.105"/>
+    <depends>com.intellij.modules.lang</depends>
+
+    <application-components>
+        <!-- TODO add application scoped components here -->
+    </application-components>
+
+    <project-components>
+        <!-- TODO add project scoped components here -->
+    </project-components>
+
+    <actions>
+        <!-- TODO add actions here -->
+    </actions>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <!-- TODO add extensions here -->
+    </extensions>
+</idea-plugin>
